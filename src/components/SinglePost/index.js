@@ -1,28 +1,84 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import usePosts from '../../hooks';
+
+import Comment from '../Comment';
+import Spinner from '../Spinner';
+
 const SinglePost = (props) => {
-  const { title, content, id } = props;
+  const { id } = props;
+  const [post, setPost] = useState(null);
+  const [postComments, setPostComments] = useState([]);
+  const [postAuthor, setPostAuthor] = useState('Duro Fusic');
+
+  const { posts, comments, users, findPostById, findCommentsByPostId, findUserById } = usePosts();
+
+  useEffect(() => {
+    if (posts) {
+      const selectedPost = findPostById(id);
+
+      if (selectedPost) {
+        setPost(selectedPost);
+      }
+    }
+  }, [id, posts]);
+
+  useEffect(() => {
+    if (comments) {
+      const selectedPostComments = findCommentsByPostId(id);
+      if (selectedPostComments) {
+        setPostComments(selectedPostComments);
+      }
+    }
+  }, [id, comments]);
+
+  useEffect(() => {
+    if (users && post) {
+      const selectedPostAuthor = findUserById(post.userId);
+      if (selectedPostAuthor) {
+        setPostAuthor(selectedPostAuthor.name);
+      }
+    }
+  }, [id, users, post]);
 
   return (
-    <StyledSinglePost>
-      <h2>{title}</h2>
-      <p>{content}</p>
-      <Link to={`/posts/${id}`}>Go to post</Link>
-    </StyledSinglePost>
+    <>
+      {post ? (
+        <StyledSinglePost>
+          <h2>{post?.title || ''}</h2>
+          <h3>{postAuthor || ''}</h3>
+          <p>{post?.body || ''}</p>
+          <p>COMMENTS: </p>
+          {postComments &&
+            postComments.map((comment) => (
+              <Comment
+                body={comment.body}
+                email={comment.email}
+                name={comment.name}
+                key={comment.id}
+              />
+            ))}
+          <Link to={`/posts/${id}`}>Go to post</Link>
+        </StyledSinglePost>
+      ) : (
+        <Spinner />
+      )}
+    </>
   );
 };
 
 SinglePost.propTypes = {
-  title: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
 };
 
 const StyledSinglePost = styled.div`
   margin: 32px 0;
+  padding: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 
   h2 {
     font-family: 'Roboto', sans-serif;
@@ -31,6 +87,12 @@ const StyledSinglePost = styled.div`
     line-height: 28px;
     margin: 0 0 16px 0;
   }
+
+  h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+  }
+
   p {
     margin: 0;
     font-family: 'Merriweather', serif;
@@ -41,6 +103,9 @@ const StyledSinglePost = styled.div`
   }
   a {
     font-family: 'Roboto', sans-serif;
+    margin-top: 16px !important;
+    display: block;
+    text-decoration: none;
   }
 `;
 

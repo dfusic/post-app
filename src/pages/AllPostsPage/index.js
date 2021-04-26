@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Container, Page, ErrorMessage, Spinner, SinglePost } from '../../components';
+import React, { useState, useEffect } from 'react';
+import { Container, Page, Spinner, ErrorMessage, SinglePost } from '../../components';
+import usePosts from '../../hooks';
 
 const AllPostsPage = () => {
-  const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const { posts } = usePosts();
+
   useEffect(() => {
     setIsLoading(true);
-    axios
-      .get('https://jsonplaceholder.typicode.com/posts')
-      .then((response) => {
-        if (response) {
-          setPosts(response.data);
-        }
-      })
-      .catch(() => setIsError(true))
-      .then(() => setIsLoading(false));
-  }, []);
+
+    if (!posts) {
+      setIsLoading(false);
+      setIsError(true);
+    }
+
+    if (posts) {
+      setIsError(false);
+      setIsLoading(false);
+    }
+  }, [posts]);
 
   return (
     <Page>
       <Container>
         {isLoading && <Spinner />}
-        {isError && <ErrorMessage message="Failed to fetch posts!" />}
-        {posts.map((post) => (
-          <SinglePost key={post.id} title={post.title} content={post.body} id={post.id} />
-        ))}
+        {isError && <ErrorMessage message="Error fetching posts!" />}
+        {posts && posts.map((post) => <SinglePost key={post.id} id={post.id} />)}
       </Container>
     </Page>
   );
