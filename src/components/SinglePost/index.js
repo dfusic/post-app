@@ -52,16 +52,18 @@ const SinglePost = (props) => {
           <h2>{post?.title || ''}</h2>
           <h3>{postAuthor || ''}</h3>
           <p>{post?.body || ''}</p>
-          <p>COMMENTS: </p>
-          {postComments &&
-            postComments.map((comment) => (
-              <Comment
-                body={comment.body}
-                email={comment.email}
-                name={comment.name}
-                key={comment.id}
-              />
-            ))}
+          {postComments && (
+            <StyledCommentsWrapper>
+              {postComments.map((comment) => (
+                <Comment
+                  body={comment.body}
+                  email={comment.email}
+                  name={comment.name}
+                  key={comment.id}
+                />
+              ))}
+            </StyledCommentsWrapper>
+          )}
           <Link to={`/posts/${id}`}>Go to post</Link>
         </StyledSinglePost>
       ) : (
@@ -107,6 +109,10 @@ const StyledSinglePost = styled.div`
     display: block;
     text-decoration: none;
   }
+`;
+
+const StyledCommentsWrapper = styled.div`
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 `;
 
 export default SinglePost;

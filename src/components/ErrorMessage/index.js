@@ -18,7 +18,11 @@ const StyledErrorMessage = styled.div`
 `;
 
 ErrorMessage.propTypes = {
-  message: PropTypes.string.isRequired,
+  message: PropTypes.string,
+};
+
+ErrorMessage.defaultProps = {
+  message: 'Oops! Something went wrong!',
 };
 
 export default ErrorMessage;
