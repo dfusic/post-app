@@ -13,4 +13,6 @@ Container.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
 };
 
+Container.displayName = 'Container';
+
 export default Container;

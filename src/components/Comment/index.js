@@ -38,4 +38,6 @@ Comment.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
+Comment.displayName = 'Comment';
+StyledComment.displayName = 'StyledComment';
 export default Comment;

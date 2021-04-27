@@ -20,4 +20,6 @@ const StyledSpinner = styled.div`
   animation-iteration-count: infinite;
 `;
 
+Spinner.displayName = 'Spinner';
+
 export default Spinner;

@@ -115,4 +115,6 @@ const StyledCommentsWrapper = styled.div`
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 `;
 
+SinglePost.displayName = 'SinglePost';
+
 export default SinglePost;

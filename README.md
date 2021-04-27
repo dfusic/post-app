@@ -10,6 +10,12 @@
 - `/posts` shows all posts, comments associated with the post and search bar for searching through posts
 - `/posts/{postId}` displays single post with author and comments
 
+## Dev tools
+
+- application uses Eslint and Prettier
+  - Eslint -> Javascript linting
+  - Prettier -> Javascript code formatting
+
 ## How to start
 
 - clone the project

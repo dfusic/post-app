@@ -46,4 +46,6 @@ Search.propTypes = {
   resetSearch: PropTypes.func.isRequired,
 };
 
+Search.displayName = 'Search';
+
 export default Search;

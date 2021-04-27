@@ -25,4 +25,6 @@ ErrorMessage.defaultProps = {
   message: 'Oops! Something went wrong!',
 };
 
+ErrorMessage.displayName = 'ErrorMessage';
+
 export default ErrorMessage;
