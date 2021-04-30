@@ -1,17 +1,15 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { Container, Page, Spinner, ErrorMessage, SinglePost, Search } from '../../components';
 import usePosts from '../../hooks';
 
-const AllPostsPage = (props) => {
+const AllPostsPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [search, setSearch] = useState('');
   const [currentPosts, setCurrentPosts] = useState(null);
   const [hasFoundPosts, setHasFoundPosts] = useState(true);
 
-  const { posts, users, sayHello } = usePosts();
+  const { posts, users } = usePosts();
 
   useEffect(() => {
     setIsLoading(true);
